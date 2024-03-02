@@ -20,7 +20,7 @@ Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
 Matrix::Matrix() : rows(1), cols(1), data(new float[1])
 {}
 Matrix::Matrix(const Matrix &other) : rows(other.rows), cols(other.cols),
-                                      data(new float[other.rows * other.cols]) {
+data(new float[other.rows * other.cols]) {
   for (int i = 0; i < rows * cols; ++i) {
     data[i] = other.data[i];
   }

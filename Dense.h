@@ -15,10 +15,12 @@ class Dense
   activation::activation_function activation_func;
 
  public :
-  Dense(const Matrix& weight, const Matrix& bias, activation::activation_function func);
+  Dense(const Matrix& weight, const Matrix& bias,
+        activation::activation_function func);
   const Matrix& get_weights() const {return weight_vector;}
   const Matrix& get_bias() const {return bias_vector;}
-  activation::activation_function get_activation() const {return activation_func;}
+  activation::activation_function get_activation()
+  const {return activation_func;}
   Matrix operator()(const Matrix& vector) const ;
 
 };
