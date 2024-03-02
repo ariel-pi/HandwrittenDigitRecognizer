@@ -11,13 +11,15 @@ MlpNetwork::MlpNetwork(const Matrix weights[MLP_SIZE], const Matrix biases[MLP_S
       r_4(weights[3], biases[3], activation::softmax) {
 }
 digit MlpNetwork:: operator()(const Matrix& m ) const {
+
+
     Matrix result = r_1(m);
     result = r_2(result);
     result = r_3(result);
     result = r_4(result);
     digit d;
     d.value = result.argmax();
-    d.probability = result( (int)d.value, 0);
+    d.probability = result[(int)d.value];
     return d;
 
 }

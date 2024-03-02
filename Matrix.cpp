@@ -35,10 +35,12 @@ Matrix &Matrix::transpose() {
   float *new_data = new float[rows * cols];
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < cols; j++) {
-      new_data[j * cols + i] = data[i * rows + j];
+      new_data[j * rows + i] = (*this)(i,j);
     }
   }
+
   Matrix transposed = Matrix(cols, rows);
+  //todo: maybe need to delete data before?
   transposed.data = new_data;
   *this = transposed;
   return *this;
@@ -46,8 +48,8 @@ Matrix &Matrix::transpose() {
 
 Matrix& Matrix::vectorize ()
 {
-    cols = 1;
     rows = rows * cols;
+    cols = 1;
     return *this;
 }
 void Matrix::plain_print() const {
@@ -55,20 +57,16 @@ void Matrix::plain_print() const {
 }
 Matrix Matrix::dot(const Matrix &other) const
 {
-  if (cols != other.rows)
+  if (cols != other.cols || rows != other.rows)
   {
-    //todo: throw exception
+  throw std::exception();
   }
   Matrix result = Matrix (rows, other.cols);
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < other.cols; j++)
     {
-      for (int k = 0; k < cols; k++)
-      {
-        result.data[i * result.rows + j] +=
-            data[i * rows + k] * other.data[k * other.rows + j];
-      }
+      result(i, j) = (*this)(i, j) * other(i, j);
     }
   }
     return result;
@@ -160,7 +158,7 @@ Matrix& Matrix::operator+=(const Matrix &other)
 {
   if (rows != other.rows || cols != other.cols)
   {
-    //todo: throw exception
+    throw std::exception();
   }
   for (int i = 0; i < rows * cols; i++)
   {
@@ -191,6 +189,7 @@ Matrix& Matrix::operator=(const Matrix &other)
   delete[] data;
   rows = other.rows;
   cols = other.cols;
+  data = new float[rows * cols];
   for (int i = 0; i < rows * cols; i++)
   {
     data[i] = other.data[i];
@@ -198,9 +197,31 @@ Matrix& Matrix::operator=(const Matrix &other)
   return *this;
 }
 
+
+
 Matrix Matrix::operator*(const Matrix &other) const
 {
-  return dot (other);
+  if(cols != other.rows)
+  {
+    throw std::exception();
+  }
+
+    Matrix result= Matrix (rows, other.cols);
+    for (int i = 0; i <rows; i++)
+    {
+      for (int j = 0; j < other.cols; j++)
+      {
+        float sum = 0;
+        for (int k = 0; k < cols; k++)
+        {
+          sum += (*this)(i, k) *
+                 other(k, j);
+        }
+        result(i, j) = sum;
+      }
+    }
+    return result;
+
 }
 
 Matrix Matrix::operator*(float scalar) const
@@ -223,7 +244,7 @@ float& Matrix::operator() (int row, int col)
     {
       throw std::exception();
     }
-  return this->data[row * rows + col];
+  return this->data[row * cols + col];
 }
 float Matrix::operator() (int row, int col) const
 {
@@ -231,7 +252,7 @@ float Matrix::operator() (int row, int col) const
   {
     throw std::exception();
   }
-  return this->data[row * rows + col];
+  return this->data[row * cols + col];
 }
 
 float& Matrix::operator[] (int index)
