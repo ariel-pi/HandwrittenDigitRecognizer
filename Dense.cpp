@@ -11,7 +11,5 @@ func){
   activation_func = func;
 }
 Matrix Dense::operator()(const Matrix& vector) const {
-  weight_vector*vector;
-  1+1;
     return activation_func(weight_vector*vector + bias_vector);
 }

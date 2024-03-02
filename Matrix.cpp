@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Matrix.h"
 #include <cmath>
+#include <cstring>
 Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
   if (rows <= 0 || cols <= 0) {
     // todo: check if need to throw exception or return null
@@ -303,6 +304,7 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   float* float_data= new float[matrix_to_fill.get_rows () * matrix_to_fill
       .get_cols ()];;
   memcpy(float_data, data, matrix_num_of_bytes);
+
 
   for (int i = 0; i < matrix_to_fill.get_rows () * matrix_to_fill.get_cols (); i++)
   {
