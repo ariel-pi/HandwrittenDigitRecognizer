@@ -24,10 +24,10 @@ float[other.rows * other.cols]) {
 Matrix::~Matrix() {
   delete[] data;
 }
-int Matrix:: getRows() const {
+int Matrix:: get_rows() const {
   return rows;
 }
-int Matrix:: getCols() const {
+int Matrix:: get_cols() const {
   return cols;
 }
 
@@ -273,9 +273,9 @@ float Matrix::operator[] (int index) const
 }
 
 std::ostream &operator<<(std::ostream &os, const Matrix &m){
-  for (int i = 0; i < m.getRows(); i++) {
-    for (int j = 0; j < m.getCols(); j++) {
-      if (m[i * m.getRows() + j] > 0.1){
+  for (int i = 0; i < m.get_rows (); i++) {
+    for (int j = 0; j < m.get_cols (); j++) {
+      if (m[i * m.get_rows () + j] > 0.1){
         os << "**";
       }
       else{
@@ -289,8 +289,8 @@ std::ostream &operator<<(std::ostream &os, const Matrix &m){
 }
 std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
 {
-  size_t matrix_num_of_bytes = matrix_to_fill.getRows() * matrix_to_fill
-      .getCols() * (size_t)sizeof (float);
+  size_t matrix_num_of_bytes = matrix_to_fill.get_rows () * matrix_to_fill
+      .get_cols () * (size_t)sizeof (float);
   char *data = new char[matrix_num_of_bytes];
   //todo: can i use char*?
   input.read (data, matrix_num_of_bytes);
@@ -300,11 +300,11 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
     throw std::exception ();
   }
 
-  float* float_data= new float[matrix_to_fill.getRows() * matrix_to_fill
-                              .getCols()];;
+  float* float_data= new float[matrix_to_fill.get_rows () * matrix_to_fill
+      .get_cols ()];;
   memcpy(float_data, data, matrix_num_of_bytes);
 
-  for (int i = 0; i < matrix_to_fill.getRows() * matrix_to_fill.getCols(); i++)
+  for (int i = 0; i < matrix_to_fill.get_rows () * matrix_to_fill.get_cols (); i++)
   {
     matrix_to_fill[i] = float_data[i];
   }

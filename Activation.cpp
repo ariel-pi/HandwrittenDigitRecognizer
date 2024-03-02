@@ -4,8 +4,8 @@
 #include <cmath>
 #include "Activation.h"
 Matrix activation::relu( const Matrix& m){
-    Matrix res_matrix = Matrix(m.getRows(),m.getCols());
-    for(int i = 0; i < m.getRows() * m.getCols(); ++i)
+    Matrix res_matrix = Matrix(m.get_rows (), m.get_cols ());
+    for(int i = 0; i < m.get_rows () * m.get_cols (); ++i)
     {
         if (m[i] >= 0)
         {
@@ -19,8 +19,8 @@ Matrix activation::relu( const Matrix& m){
     return res_matrix;
 }
 Matrix activation::softmax(const Matrix& m){
-    Matrix res_matrix = Matrix(m.getRows(),m.getCols());
-    for (int i = 0; i < m.getRows() * m.getCols(); i++)
+    Matrix res_matrix = Matrix(m.get_rows (), m.get_cols ());
+    for (int i = 0; i < m.get_rows () * m.get_cols (); i++)
     {
       res_matrix[i] = std::exp(m[i]);
     }
