@@ -11,7 +11,7 @@ struct matrix_dims {
 
 
 // Insert Matrix class here...
-struct Matrix {
+class Matrix {
  private:
     int rows, cols;
     float* data;

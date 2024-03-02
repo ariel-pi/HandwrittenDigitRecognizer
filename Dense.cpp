@@ -3,7 +3,7 @@
 //
 #include "Dense.h"
 #include "Activation.h"
-Dense::Dense(const Matrix& weight,const Matrix& bias,
+Dense::Dense(const Matrix& weight, const Matrix& bias,
              activation::activation_function
 func){
   weight_vector = weight;

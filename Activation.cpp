@@ -3,7 +3,7 @@
 //
 #include <cmath>
 #include "Activation.h"
-Matrix activation::relu( const Matrix& m){
+Matrix activation::relu(const Matrix& m){
     Matrix res_matrix = Matrix(m.get_rows (), m.get_cols ());
     for(int i = 0; i < m.get_rows () * m.get_cols (); ++i)
     {

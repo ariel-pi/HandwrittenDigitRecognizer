@@ -5,6 +5,9 @@
 #include "Matrix.h"
 #include <cmath>
 #include <cstring>
+
+#define MIN_BRIGHTNESS 0.1
+
 Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
   if (rows <= 0 || cols <= 0) {
     // todo: check if need to throw exception or return null
@@ -16,8 +19,8 @@ Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
 }
 Matrix::Matrix() : rows(1), cols(1), data(new float[1])
 {}
-Matrix::Matrix(const Matrix &other) : rows(other.rows), cols(other.cols), data(new
-float[other.rows * other.cols]) {
+Matrix::Matrix(const Matrix &other) : rows(other.rows), cols(other.cols),
+                                      data(new float[other.rows * other.cols]) {
   for (int i = 0; i < rows * cols; ++i) {
     data[i] = other.data[i];
   }
@@ -276,7 +279,7 @@ float Matrix::operator[] (int index) const
 std::ostream &operator<<(std::ostream &os, const Matrix &m){
   for (int i = 0; i < m.get_rows (); i++) {
     for (int j = 0; j < m.get_cols (); j++) {
-      if (m[i * m.get_rows () + j] > 0.1){
+      if (m[i * m.get_rows () + j] > MIN_BRIGHTNESS){
         os << "**";
       }
       else{
@@ -295,7 +298,7 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   char *data = new char[matrix_num_of_bytes];
   //todo: can i use char*?
   input.read (data, matrix_num_of_bytes);
-  if (input.fail () || input.gcount () < matrix_num_of_bytes)
+  if (input.fail () ||  (size_t)input.gcount () < matrix_num_of_bytes)
   {
     delete[] data;
     throw std::exception ();
@@ -306,7 +309,8 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   memcpy(float_data, data, matrix_num_of_bytes);
 
 
-  for (int i = 0; i < matrix_to_fill.get_rows () * matrix_to_fill.get_cols (); i++)
+  for (int i = 0; i < matrix_to_fill.get_rows ()
+  * matrix_to_fill.get_cols (); i++)
   {
     matrix_to_fill[i] = float_data[i];
   }

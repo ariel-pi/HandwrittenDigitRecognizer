@@ -4,7 +4,8 @@
 #include "MlpNetwork.h"
 
 
-MlpNetwork::MlpNetwork(const Matrix weights[MLP_SIZE], const Matrix biases[MLP_SIZE])
+MlpNetwork::MlpNetwork(const Matrix weights[MLP_SIZE],
+                       const Matrix biases[MLP_SIZE])
     : r_1(weights[0], biases[0], activation::relu),
       r_2(weights[1], biases[1], activation::relu),
       r_3(weights[2], biases[2], activation::relu),
