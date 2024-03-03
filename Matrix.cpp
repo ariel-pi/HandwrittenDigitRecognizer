@@ -88,24 +88,26 @@ float Matrix::norm() const
 Matrix Matrix::rref() const {
     Matrix result(*this);
     int lead = 0;
-    int rowCount = result.get_rows();
-    int colCount = result.get_cols();
+    int row_count = result.get_rows();
+    int col_count = result.get_cols();
 
-    for (int r = 0; r < rowCount; r++) {
-        if (colCount <= lead)
+    for (int r = 0; r < row_count; r++) {
+        if (col_count <= lead){
             break;
+        }
         int i = r;
-        while (result(i, lead) == 0.0f) {
+        while (result(i, lead) == 0) {
             i++;
-            if (i == rowCount) {
+            if (i == row_count) {
                 i = r;
                 lead++;
-                if (colCount == lead)
+                if (col_count == lead){
                     return result;
+                }
             }
         }
         if (i != r) {
-            for (int j = 0; j < colCount; j++) {
+            for (int j = 0; j < col_count; j++) {
                 float temp = result(r, j);
                 result(r, j) = result(i, j);
                 result(i, j) = temp;
@@ -113,16 +115,21 @@ Matrix Matrix::rref() const {
         }
 
         float div = result(r, lead);
-        if (div != 0.0f) {
-            for (int j = 0; j < colCount; j++)
+        if (div != 0) {
+            for (int j = 0; j < col_count; j++){
                 result(r, j) /= div;
+            }
+
         }
 
-        for (int j = 0; j < rowCount; j++) {
+        for (int j = 0; j < row_count; j++) {
             if (j != r) {
                 float sub = result(j, lead);
-                for (int k = 0; k < colCount; k++)
+                for (int k = 0; k < col_count; k++)
+                {
                     result(j, k) -= (sub * result(r, k));
+                }
+
             }
         }
         lead++;
@@ -302,7 +309,6 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
 
   float* float_data= new float[matrix_to_fill.get_rows () * matrix_to_fill
       .get_cols ()];
-  float * temp = float_data;
   memcpy(float_data, data, matrix_num_of_bytes);
 
 
