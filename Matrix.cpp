@@ -10,7 +10,7 @@
 
 Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
   if (rows <= 0 || cols <= 0) {
-    // todo: check if need to throw exception or return null
+    throw std::exception();
   }
   data = new float[rows * cols];
   for (int i = 0; i < rows * cols; i++) {
@@ -85,53 +85,49 @@ float Matrix::norm() const
   return (float)sqrt((double)sum);
 }
 
-Matrix Matrix::rref() const
-{
-  Matrix result = *this;
-  int lead = 0;
-  for (int r = 0; r < rows; r++)
-  {
-    if (cols <= lead)
-    {
-      break;
-    }
-    int i = r;
-    while (result.data[i * rows + lead] == 0)
-    {
-      i++;
-      if (rows == i)
-      {
-        i = r;
+Matrix Matrix::rref() const {
+    Matrix result(*this);
+    int lead = 0;
+    int rowCount = result.get_rows();
+    int colCount = result.get_cols();
+
+    for (int r = 0; r < rowCount; r++) {
+        if (colCount <= lead)
+            break;
+        int i = r;
+        while (result(i, lead) == 0.0f) {
+            i++;
+            if (i == rowCount) {
+                i = r;
+                lead++;
+                if (colCount == lead)
+                    return result;
+            }
+        }
+        if (i != r) {
+            for (int j = 0; j < colCount; j++) {
+                float temp = result(r, j);
+                result(r, j) = result(i, j);
+                result(i, j) = temp;
+            }
+        }
+
+        float div = result(r, lead);
+        if (div != 0.0f) {
+            for (int j = 0; j < colCount; j++)
+                result(r, j) /= div;
+        }
+
+        for (int j = 0; j < rowCount; j++) {
+            if (j != r) {
+                float sub = result(j, lead);
+                for (int k = 0; k < colCount; k++)
+                    result(j, k) -= (sub * result(r, k));
+            }
+        }
         lead++;
-        if (cols == lead)
-        {
-          break;
-        }
-      }
     }
-    for (int j = 0; j < cols; j++)
-    {
-      std::swap(result.data[i * rows + j], result.data[r * rows + j]);
-    }
-    float div = result.data[r * rows + lead];
-    for (int j = 0; j < cols; j++)
-    {
-      result.data[r * rows + j] /= div;
-    }
-    for (int i = 0; i < rows; i++)
-    {
-      if (i != r)
-      {
-        float sub = result.data[i * rows + lead];
-        for (int j = 0; j < cols; j++)
-        {
-          result.data[i * rows + j] -= sub * result.data[r * rows + j];
-        }
-      }
-    }
-    lead++;
-  }
-  return result;
+    return result;
 }
 
 int Matrix::argmax() const
@@ -305,7 +301,8 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   }
 
   float* float_data= new float[matrix_to_fill.get_rows () * matrix_to_fill
-      .get_cols ()];;
+      .get_cols ()];
+  float * temp = float_data;
   memcpy(float_data, data, matrix_num_of_bytes);
 
 
@@ -314,6 +311,7 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   {
     matrix_to_fill[i] = float_data[i];
   }
+  delete[] float_data;
 
   delete[] data;
   return input;
