@@ -8,6 +8,7 @@
 
 #define MIN_BRIGHTNESS 0.1
 
+// documentation in header file
 Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
   if (rows <= 0 || cols <= 0) {
     throw std::exception();
@@ -17,24 +18,29 @@ Matrix::Matrix(int rows, int cols): rows(rows), cols(cols) {
     data[i] = 0;
   }
 }
+// documentation in header file
 Matrix::Matrix() : rows(1), cols(1), data(new float[1])
 {}
+// documentation in header file
 Matrix::Matrix(const Matrix &other) : rows(other.rows), cols(other.cols),
 data(new float[other.rows * other.cols]) {
   for (int i = 0; i < rows * cols; ++i) {
     data[i] = other.data[i];
   }
 }
+// documentation in header file
 Matrix::~Matrix() {
   delete[] data;
 }
+// documentation in header file
 int Matrix:: get_rows() const {
   return rows;
 }
+// documentation in header file
 int Matrix:: get_cols() const {
   return cols;
 }
-
+// documentation in header file
 Matrix &Matrix::transpose() {
   float *new_data = new float[rows * cols];
   for (int i = 0; i < rows; i++) {
@@ -42,23 +48,24 @@ Matrix &Matrix::transpose() {
       new_data[j * rows + i] = (*this)(i,j);
     }
   }
-
   Matrix transposed = Matrix(cols, rows);
   //todo: maybe need to delete data before?
   transposed.data = new_data;
   *this = transposed;
   return *this;
 }
-
+// documentation in header file
 Matrix& Matrix::vectorize ()
 {
     rows = rows * cols;
     cols = 1;
     return *this;
 }
+// documentation in header file
 void Matrix::plain_print() const {
     std::cout<<this;
 }
+// documentation in header file
 Matrix Matrix::dot(const Matrix &other) const
 {
   if (cols != other.cols || rows != other.rows)
@@ -75,6 +82,7 @@ Matrix Matrix::dot(const Matrix &other) const
   }
     return result;
 }
+// documentation in header file
 float Matrix::norm() const
 {
   float sum = 0;
@@ -84,13 +92,12 @@ float Matrix::norm() const
   }
   return (float)sqrt((double)sum);
 }
-
+// documentation in header file
 Matrix Matrix::rref() const {
     Matrix result(*this);
     int lead = 0;
     int row_count = result.get_rows();
     int col_count = result.get_cols();
-
     for (int r = 0; r < row_count; r++) {
         if (col_count <= lead){
             break;
@@ -136,7 +143,7 @@ Matrix Matrix::rref() const {
     }
     return result;
 }
-
+// documentation in header file
 int Matrix::argmax() const
 {
   int max_idx = 0;
@@ -149,7 +156,7 @@ int Matrix::argmax() const
   }
   return max_idx;
 }
-
+// documentation in header file
 float Matrix::sum() const
 {
   float sum_val = 0;
@@ -160,7 +167,7 @@ float Matrix::sum() const
   return sum_val;
 }
 
-
+// documentation in header file
 Matrix& Matrix::operator+=(const Matrix &other)
 {
   if (rows != other.rows || cols != other.cols)
@@ -174,6 +181,7 @@ Matrix& Matrix::operator+=(const Matrix &other)
     return *this;
 
 }
+// documentation in header file
 Matrix Matrix::operator+(const Matrix &other) const
 {
   if (rows != other.rows || cols != other.cols)
@@ -186,7 +194,7 @@ Matrix Matrix::operator+(const Matrix &other) const
   return result;
 
 }
-
+//documentation in header file
 Matrix& Matrix::operator=(const Matrix &other)
 {
   if (this == &other)
@@ -205,7 +213,7 @@ Matrix& Matrix::operator=(const Matrix &other)
 }
 
 
-
+//documentation in header file
 Matrix Matrix::operator*(const Matrix &other) const
 {
   if(cols != other.rows)
@@ -230,7 +238,7 @@ Matrix Matrix::operator*(const Matrix &other) const
     return result;
 
 }
-
+//documentation in header file
 Matrix Matrix::operator*(float scalar) const
 {
   Matrix result = *this;
@@ -240,11 +248,12 @@ Matrix Matrix::operator*(float scalar) const
   }
   return result;
 }
-
+//documentation in header file
 Matrix operator*(float scalar, const Matrix &m)
 {
   return m * scalar;
 }
+//documentation in header file
 float& Matrix::operator() (int row, int col)
 {
     if (row < 0 || row >= rows || col < 0 || col >= cols)
@@ -253,6 +262,7 @@ float& Matrix::operator() (int row, int col)
     }
   return this->data[row * cols + col];
 }
+//documentation in header file
 float Matrix::operator() (int row, int col) const
 {
   if (row < 0 || row >= rows || col < 0 || col >= cols)
@@ -261,7 +271,7 @@ float Matrix::operator() (int row, int col) const
   }
   return this->data[row * cols + col];
 }
-
+//documentation in header file
 float& Matrix::operator[] (int index)
 {
     if (index < 0 || index >= rows * cols)
@@ -270,6 +280,7 @@ float& Matrix::operator[] (int index)
     }
   return this->data[index];
 }
+//documentation in header file
 float Matrix::operator[] (int index) const
 {
   if (index < 0 || index >= rows * cols)
@@ -278,7 +289,7 @@ float Matrix::operator[] (int index) const
   }
   return this->data[index];
 }
-
+//documentation in header file
 std::ostream &operator<<(std::ostream &os, const Matrix &m){
   for (int i = 0; i < m.get_rows (); i++) {
     for (int j = 0; j < m.get_cols (); j++) {
@@ -294,6 +305,7 @@ std::ostream &operator<<(std::ostream &os, const Matrix &m){
   }
   return os;
 }
+//documentation in header file
 std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
 {
   size_t matrix_num_of_bytes = matrix_to_fill.get_rows () * matrix_to_fill

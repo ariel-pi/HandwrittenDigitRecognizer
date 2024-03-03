@@ -37,8 +37,23 @@ class MlpNetwork
   Dense r_3;
   Dense r_4;
  public:
+  /**
+   * Constructs a new MlpNetwork with the given weights and biases.
+   *
+   * @param weights Weights of the network.
+   * @param biases Biases of the network.
+   */
   MlpNetwork(const Matrix weights[MLP_SIZE], const Matrix
   biases[MLP_SIZE]);
+  /**
+      * Classifies a given input matrix into a digit using the MLP network.
+      *
+      * This function feeds the input matrix through each layer of the MLP network
+      * and returns the digit with the highest probability.
+      *
+      * @param m Input matrix to be classified.
+      * @return A digit structure containing the classified digit value and its probability.
+      */
   digit operator()(const Matrix& m ) const;
 
 };

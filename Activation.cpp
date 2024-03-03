@@ -3,6 +3,7 @@
 //
 #include <cmath>
 #include "Activation.h"
+// documentation in the header file
 Matrix activation::relu(const Matrix& m){
     Matrix res_matrix = Matrix(m.get_rows (), m.get_cols ());
     for(int i = 0; i < m.get_rows () * m.get_cols (); ++i)
@@ -18,6 +19,7 @@ Matrix activation::relu(const Matrix& m){
     }
     return res_matrix;
 }
+// documentation in the header file
 Matrix activation::softmax(const Matrix& m){
     Matrix res_matrix = Matrix(m.get_rows (), m.get_cols ());
     for (int i = 0; i < m.get_rows () * m.get_cols (); i++)

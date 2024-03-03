@@ -3,7 +3,7 @@
 //
 #include "MlpNetwork.h"
 
-
+// documentation in the header file
 MlpNetwork::MlpNetwork(const Matrix weights[MLP_SIZE],
                        const Matrix biases[MLP_SIZE])
     : r_1(weights[0], biases[0], activation::relu),
@@ -11,6 +11,7 @@ MlpNetwork::MlpNetwork(const Matrix weights[MLP_SIZE],
       r_3(weights[2], biases[2], activation::relu),
       r_4(weights[3], biases[3], activation::softmax) {
 }
+// documentation in the header file
 digit MlpNetwork:: operator()(const Matrix& m ) const {
 
 
