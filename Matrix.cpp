@@ -49,7 +49,6 @@ Matrix &Matrix::transpose() {
     }
   }
   Matrix transposed = Matrix(cols, rows);
-  //todo: maybe need to delete data before?
   transposed.data = new_data;
   *this = transposed;
   return *this;
@@ -311,7 +310,6 @@ std::istream &operator>> (std::istream &input, Matrix &matrix_to_fill)
   size_t matrix_num_of_bytes = matrix_to_fill.get_rows () * matrix_to_fill
       .get_cols () * (size_t)sizeof (float);
   char *data = new char[matrix_num_of_bytes];
-  //todo: can i use char*?
   input.read (data, matrix_num_of_bytes);
   if (input.fail () ||  (size_t)input.gcount () < matrix_num_of_bytes)
   {
