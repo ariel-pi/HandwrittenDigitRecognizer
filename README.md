@@ -1,20 +1,24 @@
-a# Image Digit Recognition Project
+# Image Digit Recognition Project
 
 This C++ project aims to analyze images of a manuscript stored in a binary file and identify the digits that were written. It provides functionalities for image processing, matrix operations, and implementing a multi-layer perceptron (MLP) network for digit recognition.
 
 ## Project Structure
 
-### Matrix.h
+### Matrix
 Defines a class `Matrix` for matrix operations, which serves as the backbone for various mathematical operations involved in image processing and neural network computations.
 
-### Activation.h
+### Activation
 Contains activation functions such as Rectified Linear Unit (ReLU) and softmax, which are essential components of neural networks for introducing non-linearity.
 
-### Dense.h
+### Dense
 Defines a class `Dense` representing dense neural network layers. It encapsulates the weights, biases, and activation functions necessary for implementing fully connected layers.
 
-### MlpNetwork.h
+### MlpNetwork
 Implements a class `MlpNetwork` representing a multi-layer perceptron (MLP) network. This class orchestrates the process of feeding input images through the network layers and classifying them into digits.
+
+### main.cpp
+Contains the main function to demonstrate the usage of the project components. It includes loading manuscript images, initializing the MLP network, and classifying the digits present in the images.
+
 
 ## Usage
 
